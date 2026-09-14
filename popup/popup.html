@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Privacy Monitor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main class="container">
+    <header class="hero">
+      <div class="brand-mark" aria-hidden="true">◈</div>
+      <div class="hero-copy">
+        <div class="eyebrow">PRIVATE PROTECTION</div>
+        <h1>Privacy Monitor</h1>
+        <p>Your data. Your control.</p>
+      </div>
+      <span id="statusPill" class="pill"><i></i>Monitoring</span>
+    </header>
+
+    <div id="website" class="website">Detecting website…</div>
+
+    <section class="card permissions-card">
+      <div class="section-title"><span><b>Protected data</b><small>Control what this site can access</small></span><span class="shield">✦</span></div>
+      <div class="item"><span>Camera <small>video input</small></span><span><strong id="camera">Checking…</strong><button class="mini" data-permission="camera" data-decision="allow">Allow</button><button class="mini danger" data-permission="camera" data-decision="block">Block</button></span></div>
+      <div class="item"><span>Microphone <small>audio input</small></span><span><strong id="microphone">Checking…</strong><button class="mini" data-permission="microphone" data-decision="allow">Allow</button><button class="mini danger" data-permission="microphone" data-decision="block">Block</button></span></div>
+      <div class="item"><span>Location <small>device position</small></span><span><strong id="location">Checking…</strong><button class="mini" data-permission="location" data-decision="allow">Allow</button><button class="mini danger" data-permission="location" data-decision="block">Block</button></span></div>
+      <div class="item planned"><span>Files <small>future protected resource</small></span><strong id="files">Planned</strong></div>
+    </section>
+
+    <section class="card">
+      <div class="section-title"><span><b>Enforcement</b><small>Decide how protection is applied</small></span></div>
+      <div class="segmented">
+        <label><input type="radio" name="mode" value="extension"><span>Extension Level</span></label>
+        <label><input type="radio" name="mode" value="browser"><span>Browser Level</span></label>
+      </div>
+      <label class="switch-row"><span><b>In-page warnings</b><small>Show unobtrusive alerts</small></span><input id="alertsEnabled" type="checkbox"></label>
+      <label class="field"><span>Warning style</span><select id="alertStyle"><option value="toast">Toast</option><option value="badge">Badge</option><option value="both">Toast + Badge</option></select></label>
+    </section>
+
+    <section class="card appearance-card">
+      <div class="section-title"><span><b>Warning appearance</b><small>Build your own warning look</small></span><button id="resetColors" class="ghost">Reset</button></div>
+      <div class="color-grid">
+        <label class="color-control"><span>Start</span><div><input id="colorStart" type="color" value="#141418"><input id="hexStart" maxlength="7" value="#141418"></div></label>
+        <label class="color-control"><span>End</span><div><input id="colorEnd" type="color" value="#27205a"><input id="hexEnd" maxlength="7" value="#27205a"></div></label>
+        <label class="color-control"><span>Text</span><div><input id="colorText" type="color" value="#ffffff"><input id="hexText" maxlength="7" value="#ffffff"></div></label>
+        <label class="color-control"><span>Accent</span><div><input id="colorAccent" type="color" value="#9b8cff"><input id="hexAccent" maxlength="7" value="#9b8cff"></div></label>
+      </div>
+      <div class="range-grid">
+        <label><span>Corner radius <output id="radiusValue">12px</output></span><input id="alertRadius" type="range" min="6" max="28" value="12"></label>
+        <label><span>Alert duration <output id="durationValue">5s</output></span><input id="alertDuration" type="range" min="2" max="12" value="5"></label>
+      </div>
+      <label class="switch-row compact"><span><b>Neon glow</b><small>Soft accent glow around alerts</small></span><input id="alertGlow" type="checkbox" checked></label>
+      <div id="warningPreview" class="warning-preview">
+        <div class="preview-top"><span class="preview-dot"></span><span>PRIVACY MONITOR</span><span>LIVE PREVIEW</span></div>
+        <strong>Protected data access detected</strong>
+        <p>Camera access is currently blocked by your policy.</p>
+        <div class="preview-bar"></div>
+      </div>
+    </section>
+
+    <section class="card background-card">
+      <div class="section-title"><span><b>Custom background</b><small>Use your own image or animated GIF</small></span><label class="toggle"><input id="backgroundEnabled" type="checkbox"><span></span></label></div>
+      <div id="dropZone" class="drop-zone">
+        <input id="backgroundFile" type="file" accept="image/png,image/jpeg,image/gif,image/webp" hidden>
+        <div class="upload-icon">＋</div>
+        <b>Drop an image or GIF here</b>
+        <span>or click to browse · PNG, JPG, WEBP, GIF · max 4 MB</span>
+      </div>
+      <div id="backgroundInfo" class="background-info hidden">
+        <div id="backgroundThumb" class="background-thumb"></div>
+        <div class="background-meta"><b id="backgroundName">No background selected</b><span id="backgroundSize"></span><button id="removeBackground" class="ghost danger-text">Remove</button></div>
+      </div>
+      <div class="background-options">
+        <label class="field"><span>Image position</span><select id="backgroundPosition"><option value="center">Center</option><option value="top">Top</option><option value="bottom">Bottom</option><option value="left">Left</option><option value="right">Right</option></select></label>
+        <label><span>Dark overlay <output id="overlayValue">42%</output></span><input id="backgroundOverlay" type="range" min="0" max="80" value="42"></label>
+        <label><span>Panel transparency <output id="panelValue">9%</output></span><input id="panelOpacity" type="range" min="4" max="22" value="9"></label>
+      </div>
+      <p class="hint">The image is automatically resized with <b>cover</b> so it fills the extension without stretching. Animated GIFs keep their animation.</p>
+    </section>
+
+    <div id="warning" class="status-message">No warnings.</div>
+    <button id="saveSettings" class="save-button"><span>Save appearance & settings</span><b>→</b></button>
+    <p class="footnote">Protected API attempts are monitored locally. Arbitrary HTTPS payloads are not decrypted or inspected.</p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

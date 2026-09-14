@@ -1,0 +1,11 @@
+{
+  "name": "privacy-transmission-monitor",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "Private MV3 extension for consent-aware protected-data monitoring.",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "start:test-site": "node test-site/server.js"
+  }
+}
